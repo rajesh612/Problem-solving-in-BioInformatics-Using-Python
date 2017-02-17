@@ -1,0 +1,49 @@
+def edit_dist(s, t):
+    rows = len(s)+1
+    colms = len(t)+1
+    dist_array = [[0 for i in xrange(colms)] for j in range(rows)]
+
+    # first column of distance array
+    for m in xrange(1,rows):
+        dist_array[m][0] = m
+
+    # first row of distance array
+    for n in xrange(1,colms):
+        dist_array[0][n] = n
+
+    for row in xrange(1, rows):
+        for colm in xrange(1, colms):
+            if s[row-1] == t[colm-1]:
+                dist_array[row][colm] = dist_array[row - 1][colm - 1]
+            else:
+                dist_array[row][colm] = min(dist_array[row - 1][colm],
+                                            dist_array[row][colm - 1],
+                                            dist_array[row - 1][colm - 1]) + 1
+
+    for r in range(rows):
+        print(dist_array[r])
+
+    return dist_array[row][colm]
+
+
+if __name__ == '__main__':
+    s = []
+    t = []
+    string_seq = open('C:/Users/Rajesh/PycharmProjects/EditDistProb30/rosalind_edit.txt', 'r')
+    for line in string_seq:
+        if line.startswith('>'):
+            continue
+        else:
+            l = line.strip()
+            if len(s) == 0:
+                for x in l:
+                    s.append(x)
+            else:
+                for y in l:
+                    t.append(y)
+    print(s)
+    print(t)
+    print(edit_dist(s, t))
+
+
+
